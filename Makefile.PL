@@ -7,7 +7,6 @@ build_requires 'Test::More';
 requires(
       "App::CLI::Extension"   => 0,
       "Class::Data::Accessor" => 0,
-      "NEXT"                  => 0,
       "Net::SMTP"             => 0,
     );
 use_test_base;

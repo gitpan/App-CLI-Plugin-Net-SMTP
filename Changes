@@ -1,4 +1,6 @@
 Revision history for Perl extension App::CLI::Plugin::Net::SMTP
 
+0.2  Mon Nov 30 03:00:00 2009
+       - add new method(smtp_open)
 0.1  Sun Oct 25 23:00:09 2009
        - original version

@@ -8,7 +8,7 @@ App::CLI::Plugin::Net::SMTP - for App::CLI::Extension mail module
 
 =head1 VERSION
 
-0.1
+0.2
 
 =head1 SYNOPSIS
 
@@ -54,6 +54,7 @@ App::CLI::Plugin::Net::SMTP - for App::CLI::Extension mail module
                                 Charset     => "utf-8",
                                 Data        => \@messages
                              );
+      $self->smtp_open;
       $self->smtp->mail($self->{from});
       $self->smtp->to($self->{to});
       $self->smtp->data;
@@ -92,11 +93,37 @@ use base qw(Class::Data::Accessor);
 use Net::SMTP;
 
 __PACKAGE__->mk_classaccessor("smtp");
-our $VERSION = '0.1';
+our $VERSION = '0.2';
 
 =pod
 
 =head1 METHOD
+
+=head2 smtp_open
+
+initialize Net::SMTP
+
+=cut
+
+sub smtp_open {
+
+	my($self, $smtp_option) = @_;
+	if (ref($smtp_option) ne "HASH") {
+		$smtp_option = $self->config->{net_smtp};
+	}
+	if (!defined $smtp_option) {
+		die "net_smtp option is always required";
+	}
+
+	if( (exists $ENV{APPCLI_SMTP_STARTTLS} && defined $ENV{APPCLI_SMTP_STARTTLS}) ||
+		(exists $smtp_option->{StartTLS} && defined $smtp_option->{StartTLS}) ||
+		(exists $self->{starttls} && defined $self->{starttls}) ){
+		require IO::Socket::SSL;
+		unshift @Net::SMTP::ISA, "IO::Socket::SSL";
+	}
+
+	$self->smtp(Net::SMTP->new(%{$smtp_option}) or die $!);
+}
 
 =head2 smtp
 
@@ -114,10 +141,10 @@ Example2 StartTLS config:
   # in MyApp.pm
   __PACKAGE__->config(
                 net_smtp => {
-                       Host     => "localhost",
-                       Timeout  => 30,
-					   Port     => 465,
-					   StartTLS => 1
+                        Host     => "localhost",
+                        Timeout  => 30,
+                        Port     => 465,
+                        StartTLS => 1
                       }
               );
 
@@ -131,7 +158,7 @@ Advance
   
   sub options {
       return (
-	     "starttls"      => "starttls",
+         "starttls"      => "starttls",
          "from|f=s"      => "from",
          "to|t=s"        => "to",
          "subject|s=s"   => "subject"
@@ -142,19 +169,6 @@ starttls option like that you define
 
 =cut
 
-sub setup {
-
-	my $self = shift;
-	my $smtp_option = $self->config->{net_smtp} ||= die "net_smtp option is always required";
-	if( (exists $ENV{APPCLI_SMTP_STARTTLS} && defined $ENV{APPCLI_SMTP_STARTTLS}) ||
-		(exists $smtp_option->{StartTLS} && defined $smtp_option->{StartTLS})     ||
-		(exists $self->{starttls} && defined $self->{starttls}) ){
-		require IO::Socket::SSL;
-		unshift @Net::SMTP::ISA, "IO::Socket::SSL";
-	}
-	$self->smtp(Net::SMTP->new(%{$smtp_option}) or die $!);
-	return $self->NEXT::setup;
-}
 
 1;
 
