@@ -5,7 +5,7 @@ all_from 'lib/App/CLI/Plugin/Net/SMTP.pm';
 
 build_requires 'Test::More';
 requires(
-      "App::CLI::Extension"   => 0,
+      "App::CLI::Extension"   => 1.0,
       "Class::Data::Accessor" => 0,
       "Net::SMTP"             => 0,
     );

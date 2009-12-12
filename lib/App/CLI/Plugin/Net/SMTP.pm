@@ -8,7 +8,7 @@ App::CLI::Plugin::Net::SMTP - for App::CLI::Extension mail module
 
 =head1 VERSION
 
-0.2
+1.0
 
 =head1 SYNOPSIS
 
@@ -93,7 +93,7 @@ use base qw(Class::Data::Accessor);
 use Net::SMTP;
 
 __PACKAGE__->mk_classaccessor("smtp");
-our $VERSION = '0.2';
+our $VERSION = '1.0';
 
 =pod
 
