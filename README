@@ -1,11 +1,11 @@
-This is Perl module App::CLI::Plugin::Net::SMTP.
+This is Perl module App-CLI-Plugin-Net-SMTP.
 
 INSTALLATION
 
-App::CLI::Plugin::Net::SMTP installation is straightforward. If your CPAN shell is set up,
+App-CLI-Plugin-Net-SMTP installation is straightforward. If your CPAN shell is set up,
 you should just be able to do
 
-    % cpan App::CLI::Plugin::Net::SMTP
+    % cpan App-CLI-Plugin-Net-SMTP
 
 Download it, unpack it, then build it as per the usual:
 
@@ -18,9 +18,9 @@ Then install it:
 
 DOCUMENTATION
 
-App::CLI::Plugin::Net::SMTP documentation is available as in POD. So you can do:
+App-CLI-Plugin-Net-SMTP documentation is available as in POD. So you can do:
 
-    % perldoc App::CLI::Plugin::Net::SMTP
+    % perldoc App-CLI-Plugin-Net-SMTP
 
 to read the documentation online with your favorite pager.
 
